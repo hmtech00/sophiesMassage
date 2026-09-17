@@ -128,4 +128,43 @@ document.addEventListener('DOMContentLoaded', () => {
       observer.unobserve(el);
     });
   }
+
+  /* ---------- Booking form ---------- */
+  const bookingForm = document.getElementById('booking-form');
+  const bookingNote = document.getElementById('booking-form-note');
+  const BOOKING_EMAIL = 'sophiespamassagedublin@gmail.com';
+
+  if (bookingForm) {
+    bookingForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      if (!bookingForm.checkValidity()) {
+        bookingForm.reportValidity();
+        return;
+      }
+
+      const name = bookingForm.name.value.trim();
+      const email = bookingForm.email.value.trim();
+      const phone = bookingForm.phone.value.trim();
+      const treatment = bookingForm.treatment.value;
+
+      const subject = `Booking Request — ${treatment}`;
+      const body =
+        `Name: ${name}\n` +
+        `Email: ${email}\n` +
+        `Phone: ${phone}\n` +
+        `Desired massage: ${treatment}\n`;
+
+      const mailtoUrl =
+        `mailto:${BOOKING_EMAIL}` +
+        `?subject=${encodeURIComponent(subject)}` +
+        `&body=${encodeURIComponent(body)}`;
+
+      if (bookingNote) {
+        bookingNote.textContent = 'Opening your email app to send the request…';
+      }
+
+      window.location.href = mailtoUrl;
+    });
+  }
 });

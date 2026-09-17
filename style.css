@@ -645,8 +645,61 @@ button { font-family: inherit; cursor: pointer; background: none; border: none; 
   font-size: 1.05rem;
   line-height: 1.7;
 }
+.booking-form {
+  margin-top: 2.6rem;
+  text-align: left;
+}
+.form-row {
+  margin-bottom: 1.3rem;
+}
+.form-row label {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-champagne);
+  margin-bottom: 0.55rem;
+}
+.form-row input,
+.form-row select {
+  width: 100%;
+  padding: 0.85rem 1rem;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: var(--color-warm-white);
+  background: rgba(251, 249, 246, 0.06);
+  border: 1px solid var(--color-ivory-line);
+  border-radius: 2px;
+  transition: border-color var(--t-fast) var(--ease), background var(--t-fast) var(--ease);
+}
+.form-row select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23B89B78' stroke-width='1.5'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 16px;
+  padding-right: 2.6rem;
+}
+.form-row select option {
+  color: var(--color-espresso);
+  background: var(--color-warm-white);
+}
+.form-row input::placeholder { color: var(--color-taupe); }
+.form-row input:focus,
+.form-row select:focus {
+  outline: none;
+  border-color: var(--color-champagne);
+  background: rgba(251, 249, 246, 0.1);
+}
+.form-note {
+  min-height: 1.4rem;
+  font-size: 0.85rem;
+  color: var(--color-champagne);
+  margin-bottom: 0.4rem;
+}
 .booking-actions {
-  margin-top: 2.4rem;
+  margin-top: 1.2rem;
   display: flex;
   gap: 1rem;
   justify-content: center;

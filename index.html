@@ -274,11 +274,39 @@
     <div class="booking-inner reveal-up">
       <p class="section-label light">RESERVE YOUR VISIT</p>
       <h2 class="booking-title">Your moment starts here.</h2>
-      <p class="booking-copy">Take a little time for yourself. Explore our treatments or reserve your next appointment.</p>
-      <div class="booking-actions">
-        <a href="#" class="btn btn-solid-light">Book Now</a>
-        <a href="#contact" class="btn btn-outline-light">Contact Us</a>
-      </div>
+      <p class="booking-copy">Take a little time for yourself. Share a few details below and we&rsquo;ll confirm your appointment by email.</p>
+
+      <form class="booking-form" id="booking-form" novalidate>
+        <div class="form-row">
+          <label for="booking-name">Name</label>
+          <input type="text" id="booking-name" name="name" autocomplete="name" required>
+        </div>
+        <div class="form-row">
+          <label for="booking-email">Email</label>
+          <input type="email" id="booking-email" name="email" autocomplete="email" required>
+        </div>
+        <div class="form-row">
+          <label for="booking-phone">Phone</label>
+          <input type="tel" id="booking-phone" name="phone" autocomplete="tel" required>
+        </div>
+        <div class="form-row">
+          <label for="booking-treatment">Desired Massage</label>
+          <select id="booking-treatment" name="treatment" required>
+            <option value="" disabled selected>Choose a treatment&hellip;</option>
+            <option value="Signature Brazilian Massage">Signature Brazilian Massage</option>
+            <option value="Deep Tissue Release">Deep Tissue Release</option>
+            <option value="Hot Stone Therapy">Hot Stone Therapy</option>
+            <option value="Not sure yet">Not sure yet &mdash; help me choose</option>
+          </select>
+        </div>
+
+        <p class="form-note" id="booking-form-note" role="status" aria-live="polite"></p>
+
+        <div class="booking-actions">
+          <button type="submit" class="btn btn-solid-light">Book Now</button>
+          <a href="#contact" class="btn btn-outline-light">Contact Us</a>
+        </div>
+      </form>
     </div>
   </section>
 
