@@ -135,33 +135,119 @@ document.addEventListener('DOMContentLoaded', () => {
   const BOOKING_EMAIL = 'sophiespamassagedublin@gmail.com';
 
   if (bookingForm) {
+    const fields = {
+      name: bookingForm.querySelector('#booking-name'),
+      email: bookingForm.querySelector('#booking-email'),
+      phone: bookingForm.querySelector('#booking-phone'),
+      treatment: bookingForm.querySelector('#booking-treatment'),
+    };
+
+    /* Pre-select a treatment when arriving from a "View Treatment" page,
+       e.g. index.html?treatment=Deep%20Tissue%20Release#booking */
+    const params = new URLSearchParams(window.location.search);
+    const requestedTreatment = params.get('treatment');
+    if (requestedTreatment && fields.treatment) {
+      const match = Array.from(fields.treatment.options).find(
+        (opt) => opt.value === requestedTreatment
+      );
+      if (match) fields.treatment.value = requestedTreatment;
+    }
+
+    /* "Enquire" links on the Treatments cards pre-select their treatment
+       and scroll to the form, without a page reload. */
+    document.querySelectorAll('.treatment-select-link').forEach((link) => {
+      link.addEventListener('click', () => {
+        const name = link.getAttribute('data-treatment');
+        if (name && fields.treatment) fields.treatment.value = name;
+      });
+    });
+
+    const clearFieldError = (field) => {
+      field.classList.remove('field-invalid');
+      const err = bookingForm.querySelector(`[data-error-for="${field.id}"]`);
+      if (err) err.textContent = '';
+    };
+
+    const setFieldError = (field, message) => {
+      field.classList.add('field-invalid');
+      const err = bookingForm.querySelector(`[data-error-for="${field.id}"]`);
+      if (err) err.textContent = message;
+    };
+
+    Object.values(fields).forEach((field) => {
+      if (!field) return;
+      field.addEventListener('input', () => clearFieldError(field));
+      field.addEventListener('change', () => clearFieldError(field));
+    });
+
+    const validateForm = () => {
+      let isValid = true;
+
+      if (!fields.name.value.trim()) {
+        setFieldError(fields.name, 'Please enter your name.');
+        isValid = false;
+      }
+
+      const emailValue = fields.email.value.trim();
+      if (!emailValue || !fields.email.checkValidity()) {
+        setFieldError(fields.email, 'Please enter a valid email address.');
+        isValid = false;
+      }
+
+      if (!fields.phone.value.trim()) {
+        setFieldError(fields.phone, 'Please enter a phone number.');
+        isValid = false;
+      }
+
+      if (!fields.treatment.value) {
+        setFieldError(fields.treatment, 'Please choose a treatment.');
+        isValid = false;
+      }
+
+      return isValid;
+    };
+
     bookingForm.addEventListener('submit', (e) => {
       e.preventDefault();
 
-      if (!bookingForm.checkValidity()) {
-        bookingForm.reportValidity();
+      if (!validateForm()) {
+        if (bookingNote) {
+          bookingNote.textContent = 'Please check the highlighted fields above.';
+        }
         return;
       }
 
-      const name = bookingForm.name.value.trim();
-      const email = bookingForm.email.value.trim();
-      const phone = bookingForm.phone.value.trim();
-      const treatment = bookingForm.treatment.value;
+      const name = fields.name.value.trim();
+      const email = fields.email.value.trim();
+      const phone = fields.phone.value.trim();
+      const treatment = fields.treatment.value;
 
-      const subject = `Booking Request — ${treatment}`;
+      const subject = `Booking Enquiry — ${treatment}`;
       const body =
         `Name: ${name}\n` +
         `Email: ${email}\n` +
         `Phone: ${phone}\n` +
         `Desired massage: ${treatment}\n`;
 
+      /* This site is static and has no booking backend: submitting opens a
+         pre-filled email to the studio instead of confirming an appointment.
+         To wire up real bookings, replace this block with a request to a
+         booking API or platform, e.g.:
+           await fetch('https://your-booking-endpoint.example.com/enquiries', {
+             method: 'POST',
+             headers: { 'Content-Type': 'application/json' },
+             body: JSON.stringify({ name, email, phone, treatment }),
+           });
+         and update the confirmation copy below to match what that endpoint
+         guarantees (queued, confirmed, etc). */
       const mailtoUrl =
         `mailto:${BOOKING_EMAIL}` +
         `?subject=${encodeURIComponent(subject)}` +
         `&body=${encodeURIComponent(body)}`;
 
       if (bookingNote) {
-        bookingNote.textContent = 'Opening your email app to send the request…';
+        bookingNote.textContent =
+          'Opening your email app with this request pre-filled — nothing is sent until you press send there. We reply personally to confirm your appointment.';
       }
 
       window.location.href = mailtoUrl;
