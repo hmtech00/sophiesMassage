@@ -962,3 +962,18 @@ button { font-family: inherit; cursor: pointer; background: none; border: none; 
   gap: 1rem;
   flex-wrap: wrap;
 }
+
+/* Footer credit */
+.footer-credit {
+  max-width: var(--container-max);
+  margin: 1.2rem auto 0;
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  color: var(--color-taupe);
+}
+.footer-credit a {
+  color: var(--color-champagne);
+  border-bottom: 1px solid transparent;
+  transition: border-color var(--t-fast) var(--ease);
+}
+.footer-credit a:hover { border-color: var(--color-champagne); }
