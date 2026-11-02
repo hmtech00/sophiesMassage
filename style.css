@@ -364,7 +364,9 @@ button { font-family: inherit; cursor: pointer; background: none; border: none; 
 .hero-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(36,27,24,0.35) 0%, rgba(36,27,24,0.28) 45%, rgba(36,27,24,0.72) 100%);
+  background:
+    linear-gradient(90deg, rgba(36,27,24,0.66) 0%, rgba(36,27,24,0.38) 48%, rgba(36,27,24,0) 85%),
+    linear-gradient(180deg, rgba(36,27,24,0.35) 0%, rgba(36,27,24,0.2) 45%, rgba(36,27,24,0.72) 100%);
 }
 .hero-content {
   position: relative;
@@ -476,7 +478,8 @@ button { font-family: inherit; cursor: pointer; background: none; border: none; 
 .intro-text .text-link { margin-top: 2.1rem; }
 .intro-image img {
   width: 100%;
-  aspect-ratio: 4 / 5;
+  aspect-ratio: 3 / 4;
+  max-height: 88vh;
   object-fit: cover;
 }
 
